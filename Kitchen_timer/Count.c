@@ -66,11 +66,20 @@ void CountDown(uint8_t d_num[]){
 
 	while (PIND & START_SWITCH)
 	{
+		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
+			cli();
+			break;
+		}
+		
 		DynamicDrive(d_num);
 	}
 
 	for(;;){
 
+		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
+			cli();
+			break;
+		}
 
 		if (PIND & START_SWITCH){
 			
@@ -113,10 +122,7 @@ void CountDown(uint8_t d_num[]){
 			}			
 		}
 		
-		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
-			cli();
-			break;
-		}
+
 		
 		DynamicDrive(d_num);
 	}

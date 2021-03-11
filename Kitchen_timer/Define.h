@@ -38,7 +38,7 @@
 #define OFF	0xFF
 
 //7segmentLED Lighting time for each DIG
-#define LIGHT_TIME 2
+#define LIGHT_TIME 1
 
 
 /* switch */
