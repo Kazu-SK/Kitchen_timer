@@ -23,4 +23,5 @@
     - 「スタート」スイッチを押下すると、ディスプレイには【00.00】が表示され、時間の再設定が可能となる。
 
 * 状態遷移図
-![Uml State Chart_kitchen_timer](https://user-images.githubusercontent.com/61465092/110131526-91292700-7e0d-11eb-9dd4-59ceea7a6209.png)
+![Uml State Chart_kitchen_timer](https://user-images.githubusercontent.com/61465092/110797538-87e00480-82bc-11eb-876d-893628f18ec3.png)
+
