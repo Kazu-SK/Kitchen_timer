@@ -19,7 +19,7 @@ int main(void)
 		
 	DDRB = 0b11111111;
 	DDRC = 0b00101111;
-	DDRD = 0b00000000;
+	DDRD = 0b10000000;
 	
 
 	TCCR1A = 0b00000000;

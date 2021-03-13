@@ -23,6 +23,7 @@ ISR(TIMER1_COMPB_vect){
 	else
 		PORTB = OFF;
 	
+	PORTD ^= 1 << DDD7;
 	TCNT1 = 0; 
 }
 
