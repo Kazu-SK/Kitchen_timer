@@ -590,13 +590,13 @@ void DisplayFlick(){
 	PORTC = DISPLAY_DIG3;
  2d2:	8d e0       	ldi	r24, 0x0D	; 13
  2d4:	88 b9       	out	0x08, r24	; 8
- 2d6:	8f e9       	ldi	r24, 0x9F	; 159
- 2d8:	9f e0       	ldi	r25, 0x0F	; 15
+ 2d6:	8f ec       	ldi	r24, 0xCF	; 207
+ 2d8:	97 e0       	ldi	r25, 0x07	; 7
  2da:	01 97       	sbiw	r24, 0x01	; 1
  2dc:	f1 f7       	brne	.-4      	; 0x2da <DisplayFlick+0x18>
  2de:	00 c0       	rjmp	.+0      	; 0x2e0 <DisplayFlick+0x1e>
  2e0:	00 00       	nop
-	_delay_ms(2);
+	_delay_ms(LIGHT_TIME);
 
 	PORTC = DISPLAY_DIG2;
  2e2:	8b e0       	ldi	r24, 0x0B	; 11

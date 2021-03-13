@@ -40,7 +40,7 @@ void DisplayFlick(){
 	_delay_ms(LIGHT_TIME);
 
 	PORTC = DISPLAY_DIG3;
-	_delay_ms(2);
+	_delay_ms(LIGHT_TIME);
 
 	PORTC = DISPLAY_DIG2;
 	_delay_ms(LIGHT_TIME);
