@@ -151,6 +151,7 @@ void CountDown(uint8_t d_num[]){
 		
 			if(PIND & START_SWITCH){
 				cli();
+				PORTD = !(PORTD | 0xFF);
 				break;
 			}
 	
