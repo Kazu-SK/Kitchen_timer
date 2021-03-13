@@ -1,7 +1,6 @@
 *.atsln linguist-language=C
 Kitchen_timer/*.xml linguist-language=C
 Kitchen_timer/*.cproj linguist-language=C
-#Kitchen_timer/*.h linguist-language=C
 
 .vs/* linguist-vendored
 image/*.png linguist-language=C
