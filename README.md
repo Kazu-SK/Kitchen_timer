@@ -7,6 +7,8 @@
 * 開発環境：Microchip Studio 7.0.2542
 * マイコン：Atmega328p-pu
 
+# 部品
+
 # 仕様
 * 使い方
   - 時間の設定
