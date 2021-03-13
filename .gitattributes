@@ -1,0 +1,6 @@
+*.atsln linguist-language=C
+Kitchen_timer/*.xml linguist-language=C
+Kitchen_timer/*.cproj linguist-language=C
+
+.vs/* linguist-vendored
+Kitchen_timer/Debug/* linguist-vendored
