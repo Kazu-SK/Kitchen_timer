@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000000c0  00000000  00000000  000009c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000f91  00000000  00000000  00000a84  2**0
+  6 .debug_info   00000fae  00000000  00000000  00000a84  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000009d8  00000000  00000000  00001a15  2**0
+  7 .debug_abbrev 000009d8  00000000  00000000  00001a32  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000a00  00000000  00000000  000023ed  2**0
+  8 .debug_line   00000a00  00000000  00000000  0000240a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001b4  00000000  00000000  00002df0  2**2
+  9 .debug_frame  000001b4  00000000  00000000  00002e0c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000057c  00000000  00000000  00002fa4  2**0
+ 10 .debug_str    00000595  00000000  00000000  00002fc0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000790  00000000  00000000  00003520  2**0
+ 11 .debug_loc    00000790  00000000  00000000  00003555  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000080  00000000  00000000  00003cb0  2**0
+ 12 .debug_ranges 00000080  00000000  00000000  00003ce5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -260,7 +260,7 @@ void CountDown(uint8_t d_num[]){
  17e:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 	uint16_t hold_timer = 0;
 	uint32_t *p;
-	uint8_t reset_signal = 0;
+	uint8_t reset_signal = RESET_OFF;
 
 
 	TCNT1 = 0;	
@@ -405,7 +405,7 @@ void CountDown(uint8_t d_num[]){
 					DynamicDrive(d_num);
 				}				
 				
-				reset_signal = 1;
+				reset_signal = RESET_ON;
  21c:	81 e0       	ldi	r24, 0x01	; 1
  21e:	20 c0       	rjmp	.+64     	; 0x260 <CountDown+0xf0>
 				
@@ -453,10 +453,10 @@ void CountDown(uint8_t d_num[]){
 			while (PIND & START_SWITCH)
  254:	4c 99       	sbic	0x09, 4	; 9
  256:	ef cf       	rjmp	.-34     	; 0x236 <CountDown+0xc6>
+				if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
+					break;
 			}			
 		}
-		
-
 		
 		DynamicDrive(d_num);
  258:	ce 01       	movw	r24, r28
@@ -470,7 +470,7 @@ void CountDown(uint8_t d_num[]){
 	PORTB = 0x00;
  260:	15 b8       	out	0x05, r1	; 5
 
-    if(reset_signal == 0){
+    if(reset_signal == RESET_OFF){
  262:	81 11       	cpse	r24, r1
  264:	29 c0       	rjmp	.+82     	; 0x2b8 <CountDown+0x148>
 		
@@ -953,10 +953,10 @@ void SetMinutes(uint8_t d_num[]){
  490:	cf 93       	push	r28
  492:	df 93       	push	r29
  494:	ec 01       	movw	r28, r24
+	uint32_t *p;
 	float pulse_count = 0.0;
 	float push_time = 0.0;
 	
-
 
 	MinutesCounter(d_num);
  496:	0e 94 2f 02 	call	0x45e	; 0x45e <MinutesCounter>
@@ -1083,7 +1083,7 @@ void SetMinutes(uint8_t d_num[]){
  558:	4a 99       	sbic	0x09, 2	; 9
  55a:	f9 cf       	rjmp	.-14     	; 0x54e <SetMinutes+0xbe>
  55c:	02 c0       	rjmp	.+4      	; 0x562 <SetMinutes+0xd2>
-
+	
 
 	MinutesCounter(d_num);
 

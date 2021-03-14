@@ -56,7 +56,7 @@ void CountDown(uint8_t d_num[]){
 	remain_time = d_num;
 	uint16_t hold_timer = 0;
 	uint32_t *p;
-	uint8_t reset_signal = 0;
+	uint8_t reset_signal = RESET_OFF;
 
 
 	TCNT1 = 0;	
@@ -104,7 +104,7 @@ void CountDown(uint8_t d_num[]){
 					DynamicDrive(d_num);
 				}				
 				
-				reset_signal = 1;
+				reset_signal = RESET_ON;
 				
 				break;
 			}
@@ -123,8 +123,6 @@ void CountDown(uint8_t d_num[]){
 			}			
 		}
 		
-
-		
 		DynamicDrive(d_num);
 	}
 
@@ -133,7 +131,7 @@ void CountDown(uint8_t d_num[]){
 
 	PORTB = 0x00;
 
-    if(reset_signal == 0){
+    if(reset_signal == RESET_OFF){
 		
 		TIMSK1 = 0b00000100;
 		

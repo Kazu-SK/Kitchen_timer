@@ -37,7 +37,6 @@ void SetMinutes(uint8_t d_num[]){
 	float push_time = 0.0;
 	
 
-
 	MinutesCounter(d_num);
 
 	TCNT1 = 0;

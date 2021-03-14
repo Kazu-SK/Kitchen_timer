@@ -13,6 +13,7 @@
 
 /* Display */
 
+//DIGIT
 enum DIGIT{
 	SECONDS_DIG1,
 	SECONDS_DIG2,
@@ -20,6 +21,14 @@ enum DIGIT{
 	MINUTE_DIG2
 };
 
+
+//7segmentLED DIG
+#define DISPLAY_DIG4 0b00001110
+#define DISPLAY_DIG3 0b00001101
+#define DISPLAY_DIG2 0b00001011
+#define DISPLAY_DIG1 0b00000111
+
+//7segmentLED Display number ( 0 ~ 9 )
 enum DISPLAY_NUM{
 	DISPLAY_NUM0,
 	DISPLAY_NUM1,
@@ -33,13 +42,6 @@ enum DISPLAY_NUM{
 	DISPLAY_NUM9
 };
 
-//7segmentLED DIG
-#define DISPLAY_DIG4 0b00001110
-#define DISPLAY_DIG3 0b00001101
-#define DISPLAY_DIG2 0b00001011
-#define DISPLAY_DIG1 0b00000111
-
-//7segmentLED Display number ( 0 ~ 9 )
 #define SEGMENT_NUM0 0xC0
 #define SEGMENT_NUM1 0xF9
 #define SEGMENT_NUM2 0xA4
@@ -71,6 +73,12 @@ enum DISPLAY_NUM{
 #define M_CYCLE 256
 #define LONG_PLESS_TIME 1
 #define LONG_PLESS_COUNTER 0.1
+
+/* reset */
+enum RESET{
+	RESET_OFF,
+	RESET_ON	
+};
 
 
 
