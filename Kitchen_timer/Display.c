@@ -12,23 +12,23 @@
 void DynamicDrive(uint8_t disp[]){
 	
 	PORTB = OFF;
-	DisplaySegment(disp[0]);
+	DisplaySegment(disp[SECONDS_DIG1]);
 	PORTC = DISPLAY_DIG4;
 	_delay_ms(LIGHT_TIME);
 	
 	PORTB = OFF;
-	DisplaySegment(disp[1]);
+	DisplaySegment(disp[SECONDS_DIG2]);
 	PORTC = DISPLAY_DIG3;
 	_delay_ms(LIGHT_TIME);
 	
 	PORTB = OFF;
-	DisplaySegment(disp[2]);
+	DisplaySegment(disp[MINUTE_DIG1]);
 	PORTB ^= 1 << PORTB7;    //Turn on the DP.
 	PORTC = DISPLAY_DIG2;
 	_delay_ms(LIGHT_TIME);
 	
 	PORTB = OFF;
-	DisplaySegment(disp[3]);
+	DisplaySegment(disp[MINUTE_DIG2]);
 	PORTC = DISPLAY_DIG1;
 	_delay_ms(LIGHT_TIME);
 }
@@ -53,38 +53,38 @@ void DisplayFlick(){
 void DisplaySegment(uint8_t num){
 	
 	switch(num){
-		case 0:
-			PORTB = DISPLAY_NUM0;
+		case DISPLAY_NUM0:
+			PORTB = SEGMENT_NUM0;
 			break;
-		case 1:
-			PORTB = DISPLAY_NUM1;
+		case DISPLAY_NUM1:
+			PORTB = SEGMENT_NUM1;
 			break;
-		case 2:
-			PORTB = DISPLAY_NUM2;
+		case DISPLAY_NUM2:
+			PORTB = SEGMENT_NUM2;
 			break;
-		case 3:
-			PORTB = DISPLAY_NUM3;
+		case DISPLAY_NUM3:
+			PORTB = SEGMENT_NUM3;
 			break;
-		case 4:
-			PORTB = DISPLAY_NUM4;
+		case DISPLAY_NUM4:
+			PORTB = SEGMENT_NUM4;
 			break;
-		case 5:
-			PORTB = DISPLAY_NUM5;
+		case DISPLAY_NUM5:
+			PORTB = SEGMENT_NUM5;
 			break;
-		case 6:
-			PORTB = DISPLAY_NUM6;
+		case DISPLAY_NUM6:
+			PORTB = SEGMENT_NUM6;
 			break;
-		case 7:
-			PORTB = DISPLAY_NUM7;
+		case DISPLAY_NUM7:
+			PORTB = SEGMENT_NUM7;
 			break;
-		case 8:
-			PORTB = DISPLAY_NUM8;
+		case DISPLAY_NUM8:
+			PORTB = SEGMENT_NUM8;
 			break;
-		case 9:
-			PORTB = DISPLAY_NUM9;
+		case DISPLAY_NUM9:
+			PORTB = SEGMENT_NUM9;
 			break;
 		default:
-			PORTB = DISPLAY_ERROR;
+			PORTB = SEGMENT_ERROR;
 			break;
 	}
 	

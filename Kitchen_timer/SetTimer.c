@@ -9,24 +9,24 @@
 
 void MinutesCounter(uint8_t d_num[]){
 	
-	if(d_num[2] != 9)
-		d_num[2]++;
+	if(d_num[MINUTE_DIG1] != 9)
+		d_num[MINUTE_DIG1]++;
 	else{
-		d_num[2] = 0;
+		d_num[MINUTE_DIG1] = 0;
 		
-		if(d_num[3] != 9)
-			d_num[3]++;
+		if(d_num[MINUTE_DIG2] != 9)
+			d_num[MINUTE_DIG2]++;
 		else
-			d_num[3] = 0;
+			d_num[MINUTE_DIG2] = 0;
 	}
 }
 
 void SecondsCounter(uint8_t d_num[]){
 
-	if(d_num[1] != 5)
-		d_num[1]++;
+	if(d_num[SECONDS_DIG2] != 5)
+		d_num[SECONDS_DIG2]++;
 	else
-		d_num[1] = 0;
+		d_num[SECONDS_DIG2] = 0;
 }
 
 

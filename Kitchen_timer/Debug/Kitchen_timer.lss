@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000000c0  00000000  00000000  000009c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000ec9  00000000  00000000  00000a84  2**0
+  6 .debug_info   00000f91  00000000  00000000  00000a84  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000098a  00000000  00000000  0000194d  2**0
+  7 .debug_abbrev 000009d8  00000000  00000000  00001a15  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000009dc  00000000  00000000  000022d7  2**0
+  8 .debug_line   00000a00  00000000  00000000  000023ed  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001b4  00000000  00000000  00002cb4  2**2
+  9 .debug_frame  000001b4  00000000  00000000  00002df0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000004b6  00000000  00000000  00002e68  2**0
+ 10 .debug_str    0000057c  00000000  00000000  00002fa4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000790  00000000  00000000  0000331e  2**0
+ 11 .debug_loc    00000790  00000000  00000000  00003520  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000080  00000000  00000000  00003aae  2**0
+ 12 .debug_ranges 00000080  00000000  00000000  00003cb0  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -143,55 +143,55 @@ ISR(TIMER1_COMPB_vect){
 
 void TimeDisplay(){
 	
-	if(remain_time[0] == 0){
+	if(remain_time[SECONDS_DIG1] == 0){
   d8:	e0 91 00 01 	lds	r30, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
   dc:	f0 91 01 01 	lds	r31, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
   e0:	80 81       	ld	r24, Z
   e2:	81 11       	cpse	r24, r1
   e4:	1e c0       	rjmp	.+60     	; 0x122 <TimeDisplay+0x4a>
-		remain_time[0] = 9;	
+		remain_time[SECONDS_DIG1] = 9;	
   e6:	89 e0       	ldi	r24, 0x09	; 9
   e8:	80 83       	st	Z, r24
 			
-		if(remain_time[1] == 0){
+		if(remain_time[SECONDS_DIG2] == 0){
   ea:	e0 91 00 01 	lds	r30, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
   ee:	f0 91 01 01 	lds	r31, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
   f2:	81 81       	ldd	r24, Z+1	; 0x01
   f4:	81 11       	cpse	r24, r1
   f6:	12 c0       	rjmp	.+36     	; 0x11c <TimeDisplay+0x44>
-			remain_time[1] = 5;
+			remain_time[SECONDS_DIG2] = 5;
   f8:	85 e0       	ldi	r24, 0x05	; 5
   fa:	81 83       	std	Z+1, r24	; 0x01
 			
-			if (remain_time[2] == 0){
+			if (remain_time[MINUTE_DIG1] == 0){
   fc:	e0 91 00 01 	lds	r30, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  100:	f0 91 01 01 	lds	r31, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
  104:	82 81       	ldd	r24, Z+2	; 0x02
  106:	81 11       	cpse	r24, r1
  108:	06 c0       	rjmp	.+12     	; 0x116 <TimeDisplay+0x3e>
-				remain_time[3]--;
+				remain_time[MINUTE_DIG2]--;
  10a:	83 81       	ldd	r24, Z+3	; 0x03
  10c:	81 50       	subi	r24, 0x01	; 1
  10e:	83 83       	std	Z+3, r24	; 0x03
-				remain_time[2] = 9;
+				remain_time[MINUTE_DIG1] = 9;
  110:	89 e0       	ldi	r24, 0x09	; 9
  112:	82 83       	std	Z+2, r24	; 0x02
  114:	08 95       	ret
 			}
 			else
-				remain_time[2]--;	
+				remain_time[MINUTE_DIG1]--;	
  116:	81 50       	subi	r24, 0x01	; 1
  118:	82 83       	std	Z+2, r24	; 0x02
  11a:	08 95       	ret
 		}
 		else
-			remain_time[1]--;		
+			remain_time[SECONDS_DIG2]--;		
  11c:	81 50       	subi	r24, 0x01	; 1
  11e:	81 83       	std	Z+1, r24	; 0x01
  120:	08 95       	ret
 	}
 	else
-		remain_time[0]--;
+		remain_time[SECONDS_DIG1]--;
  122:	81 50       	subi	r24, 0x01	; 1
  124:	80 83       	st	Z, r24
  126:	08 95       	ret
@@ -244,7 +244,7 @@ ISR(TIMER1_COMPA_vect){
 
 00000170 <CountDown>:
 	else
-		remain_time[0]--;
+		remain_time[SECONDS_DIG1]--;
 	
 }
 
@@ -280,7 +280,7 @@ void CountDown(uint8_t d_num[]){
 	while (PIND & START_SWITCH)
  196:	11 c0       	rjmp	.+34     	; 0x1ba <CountDown+0x4a>
 	{
-		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
+		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
  198:	88 81       	ld	r24, Y
  19a:	81 11       	cpse	r24, r1
  19c:	0b c0       	rjmp	.+22     	; 0x1b4 <CountDown+0x44>
@@ -315,7 +315,7 @@ void CountDown(uint8_t d_num[]){
 
 	for(;;){
 
-		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
+		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
  1be:	88 81       	ld	r24, Y
  1c0:	81 11       	cpse	r24, r1
  1c2:	0b c0       	rjmp	.+22     	; 0x1da <CountDown+0x6a>
@@ -432,7 +432,7 @@ void CountDown(uint8_t d_num[]){
  236:	ce 01       	movw	r24, r28
  238:	0e 94 ac 01 	call	0x358	; 0x358 <DynamicDrive>
 				
-				if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0)
+				if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
  23c:	88 81       	ld	r24, Y
  23e:	81 11       	cpse	r24, r1
  240:	09 c0       	rjmp	.+18     	; 0x254 <CountDown+0xe4>
@@ -635,68 +635,68 @@ void DisplaySegment(uint8_t num){
  30e:	ec 5c       	subi	r30, 0xCC	; 204
  310:	ff 4f       	sbci	r31, 0xFF	; 255
  312:	0c 94 67 04 	jmp	0x8ce	; 0x8ce <__tablejump2__>
-		case 0:
-			PORTB = DISPLAY_NUM0;
+		case DISPLAY_NUM0:
+			PORTB = SEGMENT_NUM0;
  316:	80 ec       	ldi	r24, 0xC0	; 192
  318:	85 b9       	out	0x05, r24	; 5
 			break;
  31a:	08 95       	ret
-		case 1:
-			PORTB = DISPLAY_NUM1;
+		case DISPLAY_NUM1:
+			PORTB = SEGMENT_NUM1;
  31c:	89 ef       	ldi	r24, 0xF9	; 249
  31e:	85 b9       	out	0x05, r24	; 5
 			break;
  320:	08 95       	ret
-		case 2:
-			PORTB = DISPLAY_NUM2;
+		case DISPLAY_NUM2:
+			PORTB = SEGMENT_NUM2;
  322:	84 ea       	ldi	r24, 0xA4	; 164
  324:	85 b9       	out	0x05, r24	; 5
 			break;
  326:	08 95       	ret
-		case 3:
-			PORTB = DISPLAY_NUM3;
+		case DISPLAY_NUM3:
+			PORTB = SEGMENT_NUM3;
  328:	80 eb       	ldi	r24, 0xB0	; 176
  32a:	85 b9       	out	0x05, r24	; 5
 			break;
  32c:	08 95       	ret
-		case 4:
-			PORTB = DISPLAY_NUM4;
+		case DISPLAY_NUM4:
+			PORTB = SEGMENT_NUM4;
  32e:	89 e9       	ldi	r24, 0x99	; 153
  330:	85 b9       	out	0x05, r24	; 5
 			break;
  332:	08 95       	ret
-		case 5:
-			PORTB = DISPLAY_NUM5;
+		case DISPLAY_NUM5:
+			PORTB = SEGMENT_NUM5;
  334:	82 e9       	ldi	r24, 0x92	; 146
  336:	85 b9       	out	0x05, r24	; 5
 			break;
  338:	08 95       	ret
-		case 6:
-			PORTB = DISPLAY_NUM6;
+		case DISPLAY_NUM6:
+			PORTB = SEGMENT_NUM6;
  33a:	82 e8       	ldi	r24, 0x82	; 130
  33c:	85 b9       	out	0x05, r24	; 5
 			break;
  33e:	08 95       	ret
-		case 7:
-			PORTB = DISPLAY_NUM7;
+		case DISPLAY_NUM7:
+			PORTB = SEGMENT_NUM7;
  340:	88 ed       	ldi	r24, 0xD8	; 216
  342:	85 b9       	out	0x05, r24	; 5
 			break;
  344:	08 95       	ret
-		case 8:
-			PORTB = DISPLAY_NUM8;
+		case DISPLAY_NUM8:
+			PORTB = SEGMENT_NUM8;
  346:	80 e8       	ldi	r24, 0x80	; 128
  348:	85 b9       	out	0x05, r24	; 5
 			break;
  34a:	08 95       	ret
-		case 9:
-			PORTB = DISPLAY_NUM9;
+		case DISPLAY_NUM9:
+			PORTB = SEGMENT_NUM9;
  34c:	80 e9       	ldi	r24, 0x90	; 144
  34e:	85 b9       	out	0x05, r24	; 5
 			break;
  350:	08 95       	ret
 		default:
-			PORTB = DISPLAY_ERROR;
+			PORTB = SEGMENT_ERROR;
  352:	86 e0       	ldi	r24, 0x06	; 6
  354:	85 b9       	out	0x05, r24	; 5
  356:	08 95       	ret
@@ -716,7 +716,7 @@ void DynamicDrive(uint8_t disp[]){
 	PORTB = OFF;
  360:	1f ef       	ldi	r17, 0xFF	; 255
  362:	15 b9       	out	0x05, r17	; 5
-	DisplaySegment(disp[0]);
+	DisplaySegment(disp[SECONDS_DIG1]);
  364:	88 81       	ld	r24, Y
  366:	0e 94 82 01 	call	0x304	; 0x304 <DisplaySegment>
 	PORTC = DISPLAY_DIG4;
@@ -732,7 +732,7 @@ void DynamicDrive(uint8_t disp[]){
 	
 	PORTB = OFF;
  37a:	15 b9       	out	0x05, r17	; 5
-	DisplaySegment(disp[1]);
+	DisplaySegment(disp[SECONDS_DIG2]);
  37c:	89 81       	ldd	r24, Y+1	; 0x01
  37e:	0e 94 82 01 	call	0x304	; 0x304 <DisplaySegment>
 	PORTC = DISPLAY_DIG3;
@@ -748,7 +748,7 @@ void DynamicDrive(uint8_t disp[]){
 	
 	PORTB = OFF;
  392:	15 b9       	out	0x05, r17	; 5
-	DisplaySegment(disp[2]);
+	DisplaySegment(disp[MINUTE_DIG1]);
  394:	8a 81       	ldd	r24, Y+2	; 0x02
  396:	0e 94 82 01 	call	0x304	; 0x304 <DisplaySegment>
 	PORTB ^= 1 << PORTB7;    //Turn on the DP.
@@ -768,7 +768,7 @@ void DynamicDrive(uint8_t disp[]){
 	
 	PORTB = OFF;
  3b0:	15 b9       	out	0x05, r17	; 5
-	DisplaySegment(disp[3]);
+	DisplaySegment(disp[MINUTE_DIG2]);
  3b2:	8b 81       	ldd	r24, Y+3	; 0x03
  3b4:	0e 94 82 01 	call	0x304	; 0x304 <DisplaySegment>
 	PORTC = DISPLAY_DIG1;
@@ -900,28 +900,28 @@ int main(void)
 void MinutesCounter(uint8_t d_num[]){
  45e:	fc 01       	movw	r30, r24
 	
-	if(d_num[2] != 9)
+	if(d_num[MINUTE_DIG1] != 9)
  460:	92 81       	ldd	r25, Z+2	; 0x02
  462:	99 30       	cpi	r25, 0x09	; 9
  464:	19 f0       	breq	.+6      	; 0x46c <MinutesCounter+0xe>
-		d_num[2]++;
+		d_num[MINUTE_DIG1]++;
  466:	9f 5f       	subi	r25, 0xFF	; 255
  468:	92 83       	std	Z+2, r25	; 0x02
  46a:	08 95       	ret
 	else{
-		d_num[2] = 0;
+		d_num[MINUTE_DIG1] = 0;
  46c:	12 82       	std	Z+2, r1	; 0x02
 		
-		if(d_num[3] != 9)
+		if(d_num[MINUTE_DIG2] != 9)
  46e:	83 81       	ldd	r24, Z+3	; 0x03
  470:	89 30       	cpi	r24, 0x09	; 9
  472:	19 f0       	breq	.+6      	; 0x47a <MinutesCounter+0x1c>
-			d_num[3]++;
+			d_num[MINUTE_DIG2]++;
  474:	8f 5f       	subi	r24, 0xFF	; 255
  476:	83 83       	std	Z+3, r24	; 0x03
  478:	08 95       	ret
 		else
-			d_num[3] = 0;
+			d_num[MINUTE_DIG2] = 0;
  47a:	13 82       	std	Z+3, r1	; 0x03
  47c:	08 95       	ret
 
@@ -932,16 +932,16 @@ void MinutesCounter(uint8_t d_num[]){
 void SecondsCounter(uint8_t d_num[]){
  47e:	fc 01       	movw	r30, r24
 
-	if(d_num[1] != 5)
+	if(d_num[SECONDS_DIG2] != 5)
  480:	91 81       	ldd	r25, Z+1	; 0x01
  482:	95 30       	cpi	r25, 0x05	; 5
  484:	19 f0       	breq	.+6      	; 0x48c <SecondsCounter+0xe>
-		d_num[1]++;
+		d_num[SECONDS_DIG2]++;
  486:	9f 5f       	subi	r25, 0xFF	; 255
  488:	91 83       	std	Z+1, r25	; 0x01
  48a:	08 95       	ret
 	else
-		d_num[1] = 0;
+		d_num[SECONDS_DIG2] = 0;
  48c:	11 82       	std	Z+1, r1	; 0x01
  48e:	08 95       	ret
 

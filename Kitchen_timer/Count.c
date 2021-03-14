@@ -30,24 +30,24 @@ ISR(TIMER1_COMPB_vect){
 
 void TimeDisplay(){
 	
-	if(remain_time[0] == 0){
-		remain_time[0] = 9;	
+	if(remain_time[SECONDS_DIG1] == 0){
+		remain_time[SECONDS_DIG1] = 9;	
 			
-		if(remain_time[1] == 0){
-			remain_time[1] = 5;
+		if(remain_time[SECONDS_DIG2] == 0){
+			remain_time[SECONDS_DIG2] = 5;
 			
-			if (remain_time[2] == 0){
-				remain_time[3]--;
-				remain_time[2] = 9;
+			if (remain_time[MINUTE_DIG1] == 0){
+				remain_time[MINUTE_DIG2]--;
+				remain_time[MINUTE_DIG1] = 9;
 			}
 			else
-				remain_time[2]--;	
+				remain_time[MINUTE_DIG1]--;	
 		}
 		else
-			remain_time[1]--;		
+			remain_time[SECONDS_DIG2]--;		
 	}
 	else
-		remain_time[0]--;
+		remain_time[SECONDS_DIG1]--;
 	
 }
 
@@ -67,7 +67,7 @@ void CountDown(uint8_t d_num[]){
 
 	while (PIND & START_SWITCH)
 	{
-		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
+		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
 			cli();
 			break;
 		}
@@ -77,7 +77,7 @@ void CountDown(uint8_t d_num[]){
 
 	for(;;){
 
-		if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0){
+		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
 			cli();
 			break;
 		}
@@ -118,7 +118,7 @@ void CountDown(uint8_t d_num[]){
 			{
 				DynamicDrive(d_num);
 				
-				if(d_num[0] == 0 && d_num[1] == 0 && d_num[2] == 0 && d_num[3] == 0)
+				if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
 					break;
 			}			
 		}
