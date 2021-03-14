@@ -126,8 +126,8 @@ void CountDown(uint8_t d_num[]){
 	DynamicDrive(d_num);
 	}
 
-//	TCCR1A = 0b00000000;
-//	TCCR1B = 0b00001100;
+	//TCCR1A = 0b00000000;
+	//TCCR1B = 0b00001100;
 
 	PORTB = 0x00;
 
