@@ -988,7 +988,7 @@ void SetMinutes(uint8_t d_num[]){
  4cc:	5a e4       	ldi	r21, 0x4A	; 74
  4ce:	0e 94 d1 02 	call	0x5a2	; 0x5a2 <__divsf3>
 		
-		if(push_time >= 1){
+		if(push_time >= LONG_PLESS_TIME){
  4d2:	20 e0       	ldi	r18, 0x00	; 0
  4d4:	30 e0       	ldi	r19, 0x00	; 0
  4d6:	40 e8       	ldi	r20, 0x80	; 128
@@ -1022,7 +1022,7 @@ void SetMinutes(uint8_t d_num[]){
  50e:	5a e4       	ldi	r21, 0x4A	; 74
  510:	0e 94 d1 02 	call	0x5a2	; 0x5a2 <__divsf3>
 				
-				if (push_time >= LONG_PLESS )
+				if (push_time >= LONG_PLESS_COUNTER)
  514:	2d ec       	ldi	r18, 0xCD	; 205
  516:	3c ec       	ldi	r19, 0xCC	; 204
  518:	4c ec       	ldi	r20, 0xCC	; 204
@@ -1043,7 +1043,7 @@ void SetMinutes(uint8_t d_num[]){
  532:	ce 01       	movw	r24, r28
  534:	0e 94 ac 01 	call	0x358	; 0x358 <DynamicDrive>
 		
-		if(push_time >= 1){
+		if(push_time >= LONG_PLESS_TIME){
 			
 			TCNT1 = 0;
 			

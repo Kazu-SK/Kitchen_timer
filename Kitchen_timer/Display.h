@@ -15,9 +15,7 @@
 
 #define F_CPU 8000000UL
 
-#define F 8000000
-#define M_CYCLE 256
-#define LONG_PLESS 0.1
+
 
 #include <avr/io.h>
 #include <util/delay.h>

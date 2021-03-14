@@ -46,6 +46,12 @@
 #define MINUTE_SWITCH 0x04 
 #define START_SWITCH 0x10
 
+/* */
+#define F 8000000
+#define M_CYCLE 256
+#define LONG_PLESS_TIME 1
+#define LONG_PLESS_COUNTER 0.1
+
 
 
 

@@ -47,7 +47,7 @@ void SetMinutes(uint8_t d_num[]){
 		pulse_count = TCNT1;
 		push_time = pulse_count * M_CYCLE / F;
 		
-		if(push_time >= 1){
+		if(push_time >= LONG_PLESS_TIME){
 			
 			TCNT1 = 0;
 			
@@ -56,7 +56,7 @@ void SetMinutes(uint8_t d_num[]){
 				pulse_count = TCNT1;
 				push_time = pulse_count * M_CYCLE / F;
 				
-				if (push_time >= LONG_PLESS )
+				if (push_time >= LONG_PLESS_COUNTER)
 				{
 					MinutesCounter(d_num);
 					TCNT1 = 0;
