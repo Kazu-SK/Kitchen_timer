@@ -67,63 +67,63 @@ void CountDown(uint8_t d_num[]){
 
 	while (PIND & START_SWITCH)
 	{
-		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
-			cli();
-			break;
-		}
+	if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
+		cli();
+		break;
+	}
 		
-		DynamicDrive(d_num);
+	DynamicDrive(d_num);
 	}
 
 	for(;;){
 
-		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
-			cli();
+	if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
+		cli();
+		break;
+	}
+
+	if (PIND & START_SWITCH){
+			
+		cli();
+		hold_timer = TCNT1;
+			
+		while (PIND & START_SWITCH){
+			DynamicDrive(d_num);
+		}
+			
+		while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
+			DynamicDrive(d_num);
+		}
+			
+		if(PIND & MINUTE_SWITCH){
+				
+			p = (uint32_t *)d_num;
+			*p = 0x00000000;
+				
+			while (PIND & MINUTE_SWITCH){
+				DynamicDrive(d_num);
+			}				
+				
+			reset_signal = RESET_ON;
+				
 			break;
 		}
-
-		if (PIND & START_SWITCH){
 			
-			cli();
-			hold_timer = TCNT1;
+		TCNT1 = hold_timer;
+		TIFR1 |= 1 << OCF1A;
+		//sei();	
+		SREG |= 0x80;
 			
-			while (PIND & START_SWITCH){
-				DynamicDrive(d_num);
-			}
-			
-			while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
-				DynamicDrive(d_num);
-			}
-			
-			if(PIND & MINUTE_SWITCH){
+		while (PIND & START_SWITCH)
+		{
+			DynamicDrive(d_num);
 				
-				p = (uint32_t *)d_num;
-				*p = 0x00000000;
-				
-				while (PIND & MINUTE_SWITCH){
-					DynamicDrive(d_num);
-				}				
-				
-				reset_signal = RESET_ON;
-				
+			if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
 				break;
-			}
-			
-			TCNT1 = hold_timer;
-			TIFR1 |= 1 << OCF1A;
-			//sei();	
-			SREG |= 0x80;
-			
-			while (PIND & START_SWITCH)
-			{
-				DynamicDrive(d_num);
-				
-				if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
-					break;
-			}			
-		}
+		}			
+	}
 		
-		DynamicDrive(d_num);
+	DynamicDrive(d_num);
 	}
 
 //	TCCR1A = 0b00000000;
