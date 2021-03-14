@@ -131,7 +131,7 @@ void CountDown(uint8_t d_num[]){
 
 	PORTB = 0x00;
 
-    if(reset_signal == RESET_OFF){
+	if(reset_signal == RESET_OFF){
 		
 		TIMSK1 = 0b00000100;
 		
