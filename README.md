@@ -9,10 +9,6 @@
 
 # 電子部品
 * 7セグメントLED：5641bh
-* タクトスイッチ × 3
-* カーボン抵抗 10kΩ × 3
-* カーボン抵抗 120Ω × 8
-* カーボン抵抗 3.9kΩ × 4
 * トランジスタ：2SA1015GR × 4
 
 # 仕様
@@ -31,5 +27,5 @@
     - 「スタート」スイッチを押下すると、ディスプレイには【00.00】が表示され、時間の再設定が可能となる。
 
 * 状態遷移図
-![Uml State Chart_kitchen_timer](https://user-images.githubusercontent.com/61465092/110797538-87e00480-82bc-11eb-876d-893628f18ec3.png)
+![Uml State Chart_Kitchen_timer](https://user-images.githubusercontent.com/61465092/111067222-a2a5b980-8506-11eb-8ee8-04d1a45f2230.png)
 
