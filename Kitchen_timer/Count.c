@@ -135,7 +135,7 @@ void CountDown(uint8_t d_num[]){
 		
 		TCNT1 = 0;
 		TIFR1 |= 1 << OCF1A;
-		SREG |= 0x80;
+		SREG |= INTERRUPT_START;
 	
 		while(PIND & START_SWITCH){
 			DisplayFlick();

@@ -483,7 +483,7 @@ void CountDown(uint8_t d_num[]){
  274:	86 b3       	in	r24, 0x16	; 22
  276:	82 60       	ori	r24, 0x02	; 2
  278:	86 bb       	out	0x16, r24	; 22
-		SREG |= 0x80;
+		SREG |= INTERRUPT_START;
  27a:	8f b7       	in	r24, 0x3f	; 63
  27c:	80 68       	ori	r24, 0x80	; 128
  27e:	8f bf       	out	0x3f, r24	; 63
@@ -495,7 +495,7 @@ void CountDown(uint8_t d_num[]){
 		
 		TCNT1 = 0;
 		TIFR1 |= 1 << OCF1A;
-		SREG |= 0x80;
+		SREG |= INTERRUPT_START;
 	
 		while(PIND & START_SWITCH){
  286:	4c 99       	sbic	0x09, 4	; 9
