@@ -23,20 +23,21 @@ int main(void)
 	
 
 	TCCR1A = 0b00000000;
-	TCCR1B = 0b00001100;
+	TCCR1B = CTC_OPERATION;
 	
-	TIMSK1 = 0b00000010;
-	OCR1A = 31249;
-	OCR1B = 15624;
+	TIMSK1 = A_INTERRUPT_ENABLE;
+	
+	OCR1A = A_INTERRUPT_TIME;
+	OCR1B = B_INTERRUPT_TIME;
 	
 	cli();
 
 	for(;;)
 	{
 		if(PIND & (1 << PIND2)){
-			TCCR1B ^= 1 << WGM12;
+			TCCR1B = STANDARD_OPERATION;
 			SetMinutes(display_num);
-			TCCR1B |= 1 << WGM12;
+			TCCR1B = CTC_OPERATION;
 		}
 		
 		if(PIND & (1 << PIND3)){

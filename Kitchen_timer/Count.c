@@ -61,7 +61,7 @@ void CountDown(uint8_t d_num[]){
 
 	TCNT1 = 0;	
 	TIFR1 |= 1 << OCF1A;
-	SREG |= 0x80;
+	SREG |= INTERRUPT_START;
 	//sei();
 	
 
@@ -112,7 +112,7 @@ void CountDown(uint8_t d_num[]){
 		TCNT1 = hold_timer;
 		TIFR1 |= 1 << OCF1A;
 		//sei();	
-		SREG |= 0x80;
+		SREG |= INTERRUPT_START;
 			
 		while (PIND & START_SWITCH)
 		{
@@ -126,17 +126,13 @@ void CountDown(uint8_t d_num[]){
 	DynamicDrive(d_num);
 	}
 
-	//TCCR1A = 0b00000000;
-	//TCCR1B = 0b00001100;
 
 	PORTB = 0x00;
 
 	if(reset_signal == RESET_OFF){
 		
-		TIMSK1 = 0b00000100;
+		TIMSK1 = B_INTERRUPT_ENABLE;
 		
-		OCR1B = 15624;
-
 		TCNT1 = 0;
 		TIFR1 |= 1 << OCF1A;
 		SREG |= 0x80;
@@ -160,7 +156,7 @@ void CountDown(uint8_t d_num[]){
 			DynamicDrive(d_num);
 		}
 		
-		TIMSK1 = 0b00000010;
+		TIMSK1 = A_INTERRUPT_ENABLE;
 	}
 	
 }
