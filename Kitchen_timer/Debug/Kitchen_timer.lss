@@ -280,7 +280,7 @@ void CountDown(uint8_t d_num[]){
 	while (PIND & START_SWITCH)
  196:	11 c0       	rjmp	.+34     	; 0x1ba <CountDown+0x4a>
 	{
-	if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
+		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
  198:	88 81       	ld	r24, Y
  19a:	81 11       	cpse	r24, r1
  19c:	0b c0       	rjmp	.+22     	; 0x1b4 <CountDown+0x44>
@@ -293,13 +293,13 @@ void CountDown(uint8_t d_num[]){
  1aa:	8b 81       	ldd	r24, Y+3	; 0x03
  1ac:	81 11       	cpse	r24, r1
  1ae:	02 c0       	rjmp	.+4      	; 0x1b4 <CountDown+0x44>
-		cli();
+			cli();
  1b0:	f8 94       	cli
-		break;
+			break;
  1b2:	05 c0       	rjmp	.+10     	; 0x1be <CountDown+0x4e>
-	}
+		}
 		
-	DynamicDrive(d_num);
+		DynamicDrive(d_num);
  1b4:	ce 01       	movw	r24, r28
  1b6:	0e 94 a6 01 	call	0x34c	; 0x34c <DynamicDrive>
 	TIFR1 |= 1 << OCF1A;
@@ -310,12 +310,12 @@ void CountDown(uint8_t d_num[]){
 	while (PIND & START_SWITCH)
  1ba:	4c 99       	sbic	0x09, 4	; 9
  1bc:	ed cf       	rjmp	.-38     	; 0x198 <CountDown+0x28>
-	DynamicDrive(d_num);
+		DynamicDrive(d_num);
 	}
 
 	for(;;){
 
-	if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
+		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
  1be:	88 81       	ld	r24, Y
  1c0:	81 11       	cpse	r24, r1
  1c2:	0b c0       	rjmp	.+22     	; 0x1da <CountDown+0x6a>
@@ -328,111 +328,111 @@ void CountDown(uint8_t d_num[]){
  1d0:	8b 81       	ldd	r24, Y+3	; 0x03
  1d2:	81 11       	cpse	r24, r1
  1d4:	02 c0       	rjmp	.+4      	; 0x1da <CountDown+0x6a>
-		cli();
+			cli();
  1d6:	f8 94       	cli
-		break;
+			break;
  1d8:	43 c0       	rjmp	.+134    	; 0x260 <CountDown+0xf0>
-	}
+		}
 
-	if (PIND & START_SWITCH){
+		if (PIND & START_SWITCH){
  1da:	4c 9b       	sbis	0x09, 4	; 9
  1dc:	3d c0       	rjmp	.+122    	; 0x258 <CountDown+0xe8>
 			
-		cli();
+			cli();
  1de:	f8 94       	cli
-		hold_timer = TCNT1;
+			hold_timer = TCNT1;
  1e0:	00 91 84 00 	lds	r16, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7f8084>
  1e4:	10 91 85 00 	lds	r17, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7f8085>
 			
-		while (PIND & START_SWITCH){
+			while (PIND & START_SWITCH){
  1e8:	03 c0       	rjmp	.+6      	; 0x1f0 <CountDown+0x80>
-			DynamicDrive(d_num);
+				DynamicDrive(d_num);
  1ea:	ce 01       	movw	r24, r28
  1ec:	0e 94 a6 01 	call	0x34c	; 0x34c <DynamicDrive>
-	if (PIND & START_SWITCH){
+		if (PIND & START_SWITCH){
 			
-		cli();
-		hold_timer = TCNT1;
+			cli();
+			hold_timer = TCNT1;
 			
-		while (PIND & START_SWITCH){
+			while (PIND & START_SWITCH){
  1f0:	4c 99       	sbic	0x09, 4	; 9
  1f2:	fb cf       	rjmp	.-10     	; 0x1ea <CountDown+0x7a>
  1f4:	03 c0       	rjmp	.+6      	; 0x1fc <CountDown+0x8c>
-			DynamicDrive(d_num);
-		}
+				DynamicDrive(d_num);
+			}
 			
-		while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
-			DynamicDrive(d_num);
+			while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
+				DynamicDrive(d_num);
  1f6:	ce 01       	movw	r24, r28
  1f8:	0e 94 a6 01 	call	0x34c	; 0x34c <DynamicDrive>
 			
-		while (PIND & START_SWITCH){
-			DynamicDrive(d_num);
-		}
+			while (PIND & START_SWITCH){
+				DynamicDrive(d_num);
+			}
 			
-		while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
+			while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
  1fc:	4c 99       	sbic	0x09, 4	; 9
  1fe:	02 c0       	rjmp	.+4      	; 0x204 <CountDown+0x94>
  200:	4a 9b       	sbis	0x09, 2	; 9
  202:	f9 cf       	rjmp	.-14     	; 0x1f6 <CountDown+0x86>
-			DynamicDrive(d_num);
-		}
+				DynamicDrive(d_num);
+			}
 			
-		if(PIND & MINUTE_SWITCH){
+			if(PIND & MINUTE_SWITCH){
  204:	4a 9b       	sbis	0x09, 2	; 9
  206:	0c c0       	rjmp	.+24     	; 0x220 <CountDown+0xb0>
 				
-			p = (uint32_t *)d_num;
-			*p = 0x00000000;
+				p = (uint32_t *)d_num;
+				*p = 0x00000000;
  208:	18 82       	st	Y, r1
  20a:	19 82       	std	Y+1, r1	; 0x01
  20c:	1a 82       	std	Y+2, r1	; 0x02
  20e:	1b 82       	std	Y+3, r1	; 0x03
 				
-			while (PIND & MINUTE_SWITCH){
+				while (PIND & MINUTE_SWITCH){
  210:	03 c0       	rjmp	.+6      	; 0x218 <CountDown+0xa8>
-				DynamicDrive(d_num);
+					DynamicDrive(d_num);
  212:	ce 01       	movw	r24, r28
  214:	0e 94 a6 01 	call	0x34c	; 0x34c <DynamicDrive>
-		if(PIND & MINUTE_SWITCH){
+			if(PIND & MINUTE_SWITCH){
 				
-			p = (uint32_t *)d_num;
-			*p = 0x00000000;
+				p = (uint32_t *)d_num;
+				*p = 0x00000000;
 				
-			while (PIND & MINUTE_SWITCH){
+				while (PIND & MINUTE_SWITCH){
  218:	4a 99       	sbic	0x09, 2	; 9
  21a:	fb cf       	rjmp	.-10     	; 0x212 <CountDown+0xa2>
-				DynamicDrive(d_num);
-			}				
+					DynamicDrive(d_num);
+				}				
 				
-			reset_signal = RESET_ON;
+				reset_signal = RESET_ON;
  21c:	81 e0       	ldi	r24, 0x01	; 1
  21e:	20 c0       	rjmp	.+64     	; 0x260 <CountDown+0xf0>
 				
-			break;
-		}
+				break;
+			}
 			
-		TCNT1 = hold_timer;
+			TCNT1 = hold_timer;
  220:	10 93 85 00 	sts	0x0085, r17	; 0x800085 <__TEXT_REGION_LENGTH__+0x7f8085>
  224:	00 93 84 00 	sts	0x0084, r16	; 0x800084 <__TEXT_REGION_LENGTH__+0x7f8084>
-		TIFR1 |= 1 << OCF1A;
+			TIFR1 |= 1 << OCF1A;
  228:	86 b3       	in	r24, 0x16	; 22
  22a:	82 60       	ori	r24, 0x02	; 2
  22c:	86 bb       	out	0x16, r24	; 22
-		//sei();	
-		SREG |= INTERRUPT_START;
+			//sei();	
+			SREG |= INTERRUPT_START;
  22e:	8f b7       	in	r24, 0x3f	; 63
  230:	80 68       	ori	r24, 0x80	; 128
  232:	8f bf       	out	0x3f, r24	; 63
 			
-		while (PIND & START_SWITCH)
+			while (PIND & START_SWITCH)
  234:	0f c0       	rjmp	.+30     	; 0x254 <CountDown+0xe4>
-		{
-			DynamicDrive(d_num);
+			{
+				DynamicDrive(d_num);
  236:	ce 01       	movw	r24, r28
  238:	0e 94 a6 01 	call	0x34c	; 0x34c <DynamicDrive>
 				
-			if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
+				if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
  23c:	88 81       	ld	r24, Y
  23e:	81 11       	cpse	r24, r1
  240:	09 c0       	rjmp	.+18     	; 0x254 <CountDown+0xe4>
@@ -445,20 +445,20 @@ void CountDown(uint8_t d_num[]){
  24e:	8b 81       	ldd	r24, Y+3	; 0x03
  250:	88 23       	and	r24, r24
  252:	11 f0       	breq	.+4      	; 0x258 <CountDown+0xe8>
-		TCNT1 = hold_timer;
-		TIFR1 |= 1 << OCF1A;
-		//sei();	
-		SREG |= INTERRUPT_START;
+			TCNT1 = hold_timer;
+			TIFR1 |= 1 << OCF1A;
+			//sei();	
+			SREG |= INTERRUPT_START;
 			
-		while (PIND & START_SWITCH)
+			while (PIND & START_SWITCH)
  254:	4c 99       	sbic	0x09, 4	; 9
  256:	ef cf       	rjmp	.-34     	; 0x236 <CountDown+0xc6>
-			if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
-				break;
-		}			
-	}
+				if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0)
+					break;
+			}			
+		}
 		
-	DynamicDrive(d_num);
+		DynamicDrive(d_num);
  258:	ce 01       	movw	r24, r28
  25a:	0e 94 a6 01 	call	0x34c	; 0x34c <DynamicDrive>
 	}
