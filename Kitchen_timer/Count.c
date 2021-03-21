@@ -130,9 +130,6 @@ void CountDown(uint8_t d_num[]){
 	}
 
 
-	PORTD = ALL_LIGHT;
-	PORTB |= 1 << DDB0;
-
 	if(reset_signal == RESET_OFF){
 		
 		TIMSK1 = B_INTERRUPT_ENABLE;
@@ -140,6 +137,9 @@ void CountDown(uint8_t d_num[]){
 		TCNT1 = 0;
 		TIFR1 |= 1 << OCF1A;
 		SREG |= INTERRUPT_START;
+		
+		PORTD = ALL_LIGHT;
+		PORTB |= 1 << DDB0;
 	
 		while(PINB & START_SWITCH){
 			DisplayFlick();
