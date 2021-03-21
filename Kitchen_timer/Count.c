@@ -17,12 +17,7 @@ ISR(TIMER1_COMPA_vect){
 }
 
 ISR(TIMER1_COMPB_vect){
-/*	
-	if(PORTB == OFF)
-		PORTB = ALL_LIGHT;
-	else
-		PORTB = OFF;
-*/	
+
 	if(PORTD == OFF){
 		PORTD = ALL_LIGHT;
 		PORTB |= 1 << DDB0;
@@ -73,7 +68,6 @@ void CountDown(uint8_t d_num[]){
 	//sei();
 	
 
-	//while (PIND & START_SWITCH)
 	while (PINB & START_SWITCH)
 	{
 		if(d_num[SECONDS_DIG1] == 0 && d_num[SECONDS_DIG2] == 0 && d_num[MINUTE_DIG1] == 0 && d_num[MINUTE_DIG2] == 0){
@@ -91,29 +85,24 @@ void CountDown(uint8_t d_num[]){
 			break;
 		}
 
-		//if (PIND & START_SWITCH){
 		if (PINB & START_SWITCH){
 			
 			cli();
 			hold_timer = TCNT1;
 			
-			//while (PIND & START_SWITCH){
 			while (PINB & START_SWITCH){
 				DynamicDrive(d_num);
 			}
 			
-			//while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
 			while(!(PINB & START_SWITCH) && !(PINB & MINUTE_SWITCH)){
 				DynamicDrive(d_num);
 			}
 			
-			//if(PIND & MINUTE_SWITCH){
 			if(PINB & MINUTE_SWITCH){
 				
 				p = (uint32_t *)d_num;
 				*p = 0x00000000;
 				
-				//while (PIND & MINUTE_SWITCH){
 				while (PINB & MINUTE_SWITCH){
 					DynamicDrive(d_num);
 				}				
@@ -128,7 +117,6 @@ void CountDown(uint8_t d_num[]){
 			//sei();	
 			SREG |= INTERRUPT_START;
 			
-			//while (PIND & START_SWITCH)
 			while (PINB & START_SWITCH)
 			{
 				DynamicDrive(d_num);
@@ -142,7 +130,6 @@ void CountDown(uint8_t d_num[]){
 	}
 
 
-	//PORTB = 0x00;
 	PORTD = ALL_LIGHT;
 	PORTB |= 1 << DDB0;
 
@@ -154,17 +141,14 @@ void CountDown(uint8_t d_num[]){
 		TIFR1 |= 1 << OCF1A;
 		SREG |= INTERRUPT_START;
 	
-		//while(PIND & START_SWITCH){
 		while(PINB & START_SWITCH){
 			DisplayFlick();
 		}
 	
 		for(;;){
 		
-			//if(PIND & START_SWITCH){
 			if(PINB & START_SWITCH){
 				cli();
-				//PORTD = !(PORTD | 0xFF);
 				if(PORTB & 1 << DDB0)
 					PORTB ^= 1 << DDB0;
 				
@@ -174,7 +158,6 @@ void CountDown(uint8_t d_num[]){
 			DisplayFlick();
 		}
 	
-		//while(PIND & START_SWITCH){
 		while(PINB & START_SWITCH){
 			DynamicDrive(d_num);
 		}

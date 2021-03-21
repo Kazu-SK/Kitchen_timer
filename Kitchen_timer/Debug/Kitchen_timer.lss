@@ -111,11 +111,7 @@ ISR(TIMER1_COMPB_vect){
   ac:	11 24       	eor	r1, r1
   ae:	8f 93       	push	r24
   b0:	9f 93       	push	r25
-	if(PORTB == OFF)
-		PORTB = ALL_LIGHT;
-	else
-		PORTB = OFF;
-*/	
+
 	if(PORTD == OFF){
   b2:	8b b1       	in	r24, 0x0b	; 11
   b4:	8f 3f       	cpi	r24, 0xFF	; 255
@@ -290,7 +286,6 @@ void CountDown(uint8_t d_num[]){
 	//sei();
 	
 
-	//while (PIND & START_SWITCH)
 	while (PINB & START_SWITCH)
  1a2:	11 c0       	rjmp	.+34     	; 0x1c6 <CountDown+0x4a>
 	{
@@ -316,11 +311,11 @@ void CountDown(uint8_t d_num[]){
 		DynamicDrive(d_num);
  1c0:	ce 01       	movw	r24, r28
  1c2:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+	TIFR1 |= 1 << OCF1A;
 	SREG |= INTERRUPT_START;
 	//sei();
 	
 
-	//while (PIND & START_SWITCH)
 	while (PINB & START_SWITCH)
  1c6:	1c 99       	sbic	0x03, 4	; 3
  1c8:	ed cf       	rjmp	.-38     	; 0x1a4 <CountDown+0x28>
@@ -360,7 +355,6 @@ void CountDown(uint8_t d_num[]){
  1e6:	43 c0       	rjmp	.+134    	; 0x26e <CountDown+0xf2>
 		}
 
-		//if (PIND & START_SWITCH){
 		if (PINB & START_SWITCH){
  1e8:	1c 9b       	sbis	0x03, 4	; 3
  1ea:	3d c0       	rjmp	.+122    	; 0x266 <CountDown+0xea>
@@ -371,17 +365,16 @@ void CountDown(uint8_t d_num[]){
  1ee:	00 91 84 00 	lds	r16, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7f8084>
  1f2:	10 91 85 00 	lds	r17, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7f8085>
 			
-			//while (PIND & START_SWITCH){
 			while (PINB & START_SWITCH){
  1f6:	03 c0       	rjmp	.+6      	; 0x1fe <CountDown+0x82>
 				DynamicDrive(d_num);
  1f8:	ce 01       	movw	r24, r28
  1fa:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+		if (PINB & START_SWITCH){
 			
 			cli();
 			hold_timer = TCNT1;
 			
-			//while (PIND & START_SWITCH){
 			while (PINB & START_SWITCH){
  1fe:	1c 99       	sbic	0x03, 4	; 3
  200:	fb cf       	rjmp	.-10     	; 0x1f8 <CountDown+0x7c>
@@ -389,16 +382,15 @@ void CountDown(uint8_t d_num[]){
 				DynamicDrive(d_num);
 			}
 			
-			//while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
 			while(!(PINB & START_SWITCH) && !(PINB & MINUTE_SWITCH)){
 				DynamicDrive(d_num);
  204:	ce 01       	movw	r24, r28
  206:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+			
 			while (PINB & START_SWITCH){
 				DynamicDrive(d_num);
 			}
 			
-			//while(!(PIND & START_SWITCH) && !(PIND & MINUTE_SWITCH)){
 			while(!(PINB & START_SWITCH) && !(PINB & MINUTE_SWITCH)){
  20a:	1c 99       	sbic	0x03, 4	; 3
  20c:	02 c0       	rjmp	.+4      	; 0x212 <CountDown+0x96>
@@ -407,7 +399,6 @@ void CountDown(uint8_t d_num[]){
 				DynamicDrive(d_num);
 			}
 			
-			//if(PIND & MINUTE_SWITCH){
 			if(PINB & MINUTE_SWITCH){
  212:	1a 9b       	sbis	0x03, 2	; 3
  214:	0c c0       	rjmp	.+24     	; 0x22e <CountDown+0xb2>
@@ -419,17 +410,16 @@ void CountDown(uint8_t d_num[]){
  21a:	1a 82       	std	Y+2, r1	; 0x02
  21c:	1b 82       	std	Y+3, r1	; 0x03
 				
-				//while (PIND & MINUTE_SWITCH){
 				while (PINB & MINUTE_SWITCH){
  21e:	03 c0       	rjmp	.+6      	; 0x226 <CountDown+0xaa>
 					DynamicDrive(d_num);
  220:	ce 01       	movw	r24, r28
  222:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+			if(PINB & MINUTE_SWITCH){
 				
 				p = (uint32_t *)d_num;
 				*p = 0x00000000;
 				
-				//while (PIND & MINUTE_SWITCH){
 				while (PINB & MINUTE_SWITCH){
  226:	1a 99       	sbic	0x03, 2	; 3
  228:	fb cf       	rjmp	.-10     	; 0x220 <CountDown+0xa4>
@@ -456,7 +446,6 @@ void CountDown(uint8_t d_num[]){
  23e:	80 68       	ori	r24, 0x80	; 128
  240:	8f bf       	out	0x3f, r24	; 63
 			
-			//while (PIND & START_SWITCH)
 			while (PINB & START_SWITCH)
  242:	0f c0       	rjmp	.+30     	; 0x262 <CountDown+0xe6>
 			{
@@ -477,11 +466,11 @@ void CountDown(uint8_t d_num[]){
  25c:	8b 81       	ldd	r24, Y+3	; 0x03
  25e:	88 23       	and	r24, r24
  260:	11 f0       	breq	.+4      	; 0x266 <CountDown+0xea>
+			TCNT1 = hold_timer;
 			TIFR1 |= 1 << OCF1A;
 			//sei();	
 			SREG |= INTERRUPT_START;
 			
-			//while (PIND & START_SWITCH)
 			while (PINB & START_SWITCH)
  262:	1c 99       	sbic	0x03, 4	; 3
  264:	ef cf       	rjmp	.-34     	; 0x244 <CountDown+0xc8>
@@ -497,7 +486,6 @@ void CountDown(uint8_t d_num[]){
  26c:	ae cf       	rjmp	.-164    	; 0x1ca <CountDown+0x4e>
 
 
-	//PORTB = 0x00;
 	PORTD = ALL_LIGHT;
  26e:	1b b8       	out	0x0b, r1	; 11
 	PORTB |= 1 << DDB0;
@@ -525,30 +513,28 @@ void CountDown(uint8_t d_num[]){
  290:	80 68       	ori	r24, 0x80	; 128
  292:	8f bf       	out	0x3f, r24	; 63
 	
-		//while(PIND & START_SWITCH){
 		while(PINB & START_SWITCH){
  294:	02 c0       	rjmp	.+4      	; 0x29a <CountDown+0x11e>
 			DisplayFlick();
  296:	0e 94 69 01 	call	0x2d2	; 0x2d2 <DisplayFlick>
+		
 		TCNT1 = 0;
 		TIFR1 |= 1 << OCF1A;
 		SREG |= INTERRUPT_START;
 	
-		//while(PIND & START_SWITCH){
 		while(PINB & START_SWITCH){
  29a:	1c 99       	sbic	0x03, 4	; 3
  29c:	fc cf       	rjmp	.-8      	; 0x296 <CountDown+0x11a>
+			DisplayFlick();
 		}
 	
 		for(;;){
 		
-			//if(PIND & START_SWITCH){
 			if(PINB & START_SWITCH){
  29e:	1c 9b       	sbis	0x03, 4	; 3
  2a0:	08 c0       	rjmp	.+16     	; 0x2b2 <CountDown+0x136>
 				cli();
  2a2:	f8 94       	cli
-				//PORTD = !(PORTD | 0xFF);
 				if(PORTB & 1 << DDB0)
  2a4:	28 9b       	sbis	0x05, 0	; 5
  2a6:	0b c0       	rjmp	.+22     	; 0x2be <CountDown+0x142>
@@ -567,16 +553,15 @@ void CountDown(uint8_t d_num[]){
 		}
  2b6:	f3 cf       	rjmp	.-26     	; 0x29e <CountDown+0x122>
 	
-		//while(PIND & START_SWITCH){
 		while(PINB & START_SWITCH){
 			DynamicDrive(d_num);
  2b8:	ce 01       	movw	r24, r28
  2ba:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+			}
 	
 			DisplayFlick();
 		}
 	
-		//while(PIND & START_SWITCH){
 		while(PINB & START_SWITCH){
  2be:	1c 99       	sbic	0x03, 4	; 3
  2c0:	fb cf       	rjmp	.-10     	; 0x2b8 <CountDown+0x13c>
@@ -666,77 +651,66 @@ void DisplaySegment(uint8_t num){
  320:	ff 4f       	sbci	r31, 0xFF	; 255
  322:	0c 94 6c 04 	jmp	0x8d8	; 0x8d8 <__tablejump2__>
 		case DISPLAY_NUM0:
-			//PORTB = SEGMENT_NUM0;
 			PORTD = SEGMENT_NUM0;
  326:	80 ec       	ldi	r24, 0xC0	; 192
  328:	8b b9       	out	0x0b, r24	; 11
 			break;
  32a:	08 95       	ret
 		case DISPLAY_NUM1:
-			//PORTB = SEGMENT_NUM1;
 			PORTD = SEGMENT_NUM1;
  32c:	89 ef       	ldi	r24, 0xF9	; 249
  32e:	8b b9       	out	0x0b, r24	; 11
 			break;
  330:	08 95       	ret
 		case DISPLAY_NUM2:
-			//PORTB = SEGMENT_NUM2;
 			PORTD = SEGMENT_NUM2;
  332:	84 ea       	ldi	r24, 0xA4	; 164
  334:	8b b9       	out	0x0b, r24	; 11
 			break;
  336:	08 95       	ret
 		case DISPLAY_NUM3:
-			//PORTB = SEGMENT_NUM3;
 			PORTD = SEGMENT_NUM3;
  338:	80 eb       	ldi	r24, 0xB0	; 176
  33a:	8b b9       	out	0x0b, r24	; 11
 			break;
  33c:	08 95       	ret
 		case DISPLAY_NUM4:
-			//PORTB = SEGMENT_NUM4;
 			PORTD = SEGMENT_NUM4;
  33e:	89 e9       	ldi	r24, 0x99	; 153
  340:	8b b9       	out	0x0b, r24	; 11
 			break;
  342:	08 95       	ret
 		case DISPLAY_NUM5:
-			//PORTB = SEGMENT_NUM5;
 			PORTD = SEGMENT_NUM5;
  344:	82 e9       	ldi	r24, 0x92	; 146
  346:	8b b9       	out	0x0b, r24	; 11
 			break;
  348:	08 95       	ret
 		case DISPLAY_NUM6:
-			//PORTB = SEGMENT_NUM6;
 			PORTD = SEGMENT_NUM6;
  34a:	82 e8       	ldi	r24, 0x82	; 130
  34c:	8b b9       	out	0x0b, r24	; 11
 			break;
  34e:	08 95       	ret
 		case DISPLAY_NUM7:
-			//PORTB = SEGMENT_NUM7;
 			PORTD = SEGMENT_NUM7;
  350:	88 ed       	ldi	r24, 0xD8	; 216
  352:	8b b9       	out	0x0b, r24	; 11
 			break;
  354:	08 95       	ret
 		case DISPLAY_NUM8:
-			//PORTB = SEGMENT_NUM8;
 			PORTD = SEGMENT_NUM8;
  356:	80 e8       	ldi	r24, 0x80	; 128
  358:	8b b9       	out	0x0b, r24	; 11
 			break;
  35a:	08 95       	ret
 		case DISPLAY_NUM9:
-			//PORTB = SEGMENT_NUM9;
 			PORTD = SEGMENT_NUM9;
  35c:	80 e9       	ldi	r24, 0x90	; 144
  35e:	8b b9       	out	0x0b, r24	; 11
 			break;
  360:	08 95       	ret
 		default:
-			//PORTB = SEGMENT_ERROR;
 			PORTD = SEGMENT_ERROR;
  362:	86 e0       	ldi	r24, 0x06	; 6
  364:	8b b9       	out	0x0b, r24	; 11
@@ -754,7 +728,6 @@ void DynamicDrive(uint8_t disp[]){
  36c:	df 93       	push	r29
  36e:	ec 01       	movw	r28, r24
 	
-	//PORTB = OFF;
 	PORTD = OFF;
  370:	1f ef       	ldi	r17, 0xFF	; 255
  372:	1b b9       	out	0x0b, r17	; 11
@@ -772,7 +745,6 @@ void DynamicDrive(uint8_t disp[]){
  388:	00 00       	nop
 	_delay_ms(LIGHT_TIME);
 	
-	//PORTB = OFF;
 	PORTD = OFF;
  38a:	1b b9       	out	0x0b, r17	; 11
 	DisplaySegment(disp[SECONDS_DIG2]);
@@ -789,13 +761,11 @@ void DynamicDrive(uint8_t disp[]){
  3a0:	00 00       	nop
 	_delay_ms(LIGHT_TIME);
 	
-	//PORTB = OFF;
 	PORTD = OFF;
  3a2:	1b b9       	out	0x0b, r17	; 11
 	DisplaySegment(disp[MINUTE_DIG1]);
  3a4:	8a 81       	ldd	r24, Y+2	; 0x02
  3a6:	0e 94 8a 01 	call	0x314	; 0x314 <DisplaySegment>
-	//PORTB ^= 1 << PORTB7;    //Turn on the DP.
 	PORTD ^= 1 << PORTD7;    //Turn on the DP.
  3aa:	8b b1       	in	r24, 0x0b	; 11
  3ac:	80 58       	subi	r24, 0x80	; 128
@@ -811,7 +781,6 @@ void DynamicDrive(uint8_t disp[]){
  3be:	00 00       	nop
 	_delay_ms(LIGHT_TIME);
 	
-	//PORTB = OFF;
 	PORTD = OFF;
  3c0:	1b b9       	out	0x0b, r17	; 11
 	DisplaySegment(disp[MINUTE_DIG2]);
@@ -852,20 +821,14 @@ int main(void)
  3ee:	1a 82       	std	Y+2, r1	; 0x02
  3f0:	1b 82       	std	Y+3, r1	; 0x03
  3f2:	1c 82       	std	Y+4, r1	; 0x04
-	//7SegmentLED base PORTC -> PORTC
-	//switch		   PORTD -> PORTB
-	//7SegmentLED	   PORTB -> PORTD
 		
-	//DDRB = 0b11111111;
-	DDRB = 0b00000001;
+
+	DDRB = 0b00000001;	
  3f4:	81 e0       	ldi	r24, 0x01	; 1
  3f6:	84 b9       	out	0x04, r24	; 4
-	
-	DDRC = 0b00101111;
+	DDRC = 0b00101111;	
  3f8:	8f e2       	ldi	r24, 0x2F	; 47
  3fa:	87 b9       	out	0x07, r24	; 7
-	
-	//DDRD = 0b10000000;
 	DDRD = 0b11111111;
  3fc:	8f ef       	ldi	r24, 0xFF	; 255
  3fe:	8a b9       	out	0x0a, r24	; 10
@@ -897,7 +860,6 @@ int main(void)
 
 	for(;;)
 	{
-		//if(PIND & (1 << PIND2)){
 		if(PINB & (1 << PINB2)){
  42a:	1a 9b       	sbis	0x03, 2	; 3
  42c:	0c c0       	rjmp	.+24     	; 0x446 <__EEPROM_REGION_LENGTH__+0x46>
@@ -917,7 +879,6 @@ int main(void)
  444:	80 83       	st	Z, r24
 		}
 		
-	//	if(PIND & (1 << PIND3)){
 		if(PINB & (1 << PINB3)){
  446:	1b 9b       	sbis	0x03, 3	; 3
  448:	04 c0       	rjmp	.+8      	; 0x452 <__EEPROM_REGION_LENGTH__+0x52>
@@ -927,8 +888,7 @@ int main(void)
  44e:	0e 94 b9 02 	call	0x572	; 0x572 <SetSeconds>
 		}
 		
-	//	if(PIND & (1 << PIND4)){
-		if(PINB & (1 << PIND4)){
+		if(PINB & (1 << PINB4)){
  452:	1c 9b       	sbis	0x03, 4	; 3
  454:	04 c0       	rjmp	.+8      	; 0x45e <__EEPROM_REGION_LENGTH__+0x5e>
 			CountDown(display_num);
@@ -1017,7 +977,6 @@ void SetMinutes(uint8_t d_num[]){
 	TCNT1 = 0;
  4a4:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7f8085>
  4a8:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7f8084>
-	//while(PIND & MINUTE_SWITCH){
 	while(PINB & MINUTE_SWITCH){
  4ac:	5d c0       	rjmp	.+186    	; 0x568 <SetMinutes+0xce>
 		DynamicDrive(d_num);
@@ -1055,7 +1014,6 @@ void SetMinutes(uint8_t d_num[]){
  4ec:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7f8085>
  4f0:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7f8084>
 			
-			//while(PIND & MINUTE_SWITCH && !(PIND & SECONDS_SWITCH)){
 			while(PINB & MINUTE_SWITCH && !(PINB & SECONDS_SWITCH)){
  4f4:	26 c0       	rjmp	.+76     	; 0x542 <SetMinutes+0xa8>
 				
@@ -1097,21 +1055,21 @@ void SetMinutes(uint8_t d_num[]){
 				DynamicDrive(d_num);
  53c:	ce 01       	movw	r24, r28
  53e:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+		
 		if(push_time >= LONG_PLESS_TIME){
 			
 			TCNT1 = 0;
 			
-			//while(PIND & MINUTE_SWITCH && !(PIND & SECONDS_SWITCH)){
 			while(PINB & MINUTE_SWITCH && !(PINB & SECONDS_SWITCH)){
  542:	1a 9b       	sbis	0x03, 2	; 3
  544:	02 c0       	rjmp	.+4      	; 0x54a <SetMinutes+0xb0>
  546:	1b 9b       	sbis	0x03, 3	; 3
  548:	d6 cf       	rjmp	.-84     	; 0x4f6 <SetMinutes+0x5c>
+				
 				DynamicDrive(d_num);
 			}
 		}
 		
-		//if(PIND & SECONDS_SWITCH){
 		if(PINB & SECONDS_SWITCH){
  54a:	1b 9b       	sbis	0x03, 3	; 3
  54c:	0d c0       	rjmp	.+26     	; 0x568 <SetMinutes+0xce>
@@ -1122,28 +1080,27 @@ void SetMinutes(uint8_t d_num[]){
  552:	1a 82       	std	Y+2, r1	; 0x02
  554:	1b 82       	std	Y+3, r1	; 0x03
 			
-			//while(PIND & SECONDS_SWITCH || PIND & MINUTE_SWITCH){
 			while(PINB & SECONDS_SWITCH || PINB & MINUTE_SWITCH){
  556:	03 c0       	rjmp	.+6      	; 0x55e <SetMinutes+0xc4>
 				DynamicDrive(d_num);
  558:	ce 01       	movw	r24, r28
  55a:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+		
 		if(PINB & SECONDS_SWITCH){
 			p = (uint32_t *)d_num;
 			*p = 0x00000000;
 			
-			//while(PIND & SECONDS_SWITCH || PIND & MINUTE_SWITCH){
 			while(PINB & SECONDS_SWITCH || PINB & MINUTE_SWITCH){
  55e:	1b 99       	sbic	0x03, 3	; 3
  560:	fb cf       	rjmp	.-10     	; 0x558 <SetMinutes+0xbe>
  562:	1a 99       	sbic	0x03, 2	; 3
  564:	f9 cf       	rjmp	.-14     	; 0x558 <SetMinutes+0xbe>
  566:	02 c0       	rjmp	.+4      	; 0x56c <SetMinutes+0xd2>
+	
 
 	MinutesCounter(d_num);
 
 	TCNT1 = 0;
-	//while(PIND & MINUTE_SWITCH){
 	while(PINB & MINUTE_SWITCH){
  568:	1a 99       	sbic	0x03, 2	; 3
  56a:	a1 cf       	rjmp	.-190    	; 0x4ae <SetMinutes+0x14>
@@ -1170,14 +1127,12 @@ void SetSeconds(uint8_t d_num[]){
 	SecondsCounter(d_num);
  578:	0e 94 44 02 	call	0x488	; 0x488 <SecondsCounter>
 	
-	//while(PIND & SECONDS_SWITCH){
 	while(PINB & SECONDS_SWITCH){
  57c:	12 c0       	rjmp	.+36     	; 0x5a2 <SetSeconds+0x30>
 		DynamicDrive(d_num);
  57e:	ce 01       	movw	r24, r28
  580:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
 		
-		//if(PIND & MINUTE_SWITCH){
 		if(PINB & MINUTE_SWITCH){
  584:	1a 9b       	sbis	0x03, 2	; 3
  586:	0d c0       	rjmp	.+26     	; 0x5a2 <SetSeconds+0x30>
@@ -1188,28 +1143,27 @@ void SetSeconds(uint8_t d_num[]){
  58c:	1a 82       	std	Y+2, r1	; 0x02
  58e:	1b 82       	std	Y+3, r1	; 0x03
 			
-			//while(PIND & SECONDS_SWITCH || PIND & MINUTE_SWITCH){
 			while(PINB & SECONDS_SWITCH || PINB & MINUTE_SWITCH){
  590:	03 c0       	rjmp	.+6      	; 0x598 <SetSeconds+0x26>
 				DynamicDrive(d_num);
  592:	ce 01       	movw	r24, r28
  594:	0e 94 b4 01 	call	0x368	; 0x368 <DynamicDrive>
+		
 		if(PINB & MINUTE_SWITCH){
 			p = (uint32_t *)d_num;
 			*p = 0x00000000;
 			
-			//while(PIND & SECONDS_SWITCH || PIND & MINUTE_SWITCH){
 			while(PINB & SECONDS_SWITCH || PINB & MINUTE_SWITCH){
  598:	1b 99       	sbic	0x03, 3	; 3
  59a:	fb cf       	rjmp	.-10     	; 0x592 <SetSeconds+0x20>
  59c:	1a 99       	sbic	0x03, 2	; 3
  59e:	f9 cf       	rjmp	.-14     	; 0x592 <SetSeconds+0x20>
  5a0:	02 c0       	rjmp	.+4      	; 0x5a6 <SetSeconds+0x34>
+	uint32_t *p;
 	
 	
 	SecondsCounter(d_num);
 	
-	//while(PIND & SECONDS_SWITCH){
 	while(PINB & SECONDS_SWITCH){
  5a2:	1b 99       	sbic	0x03, 3	; 3
  5a4:	ec cf       	rjmp	.-40     	; 0x57e <SetSeconds+0xc>

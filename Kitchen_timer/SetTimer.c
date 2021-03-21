@@ -40,7 +40,6 @@ void SetMinutes(uint8_t d_num[]){
 	MinutesCounter(d_num);
 
 	TCNT1 = 0;
-	//while(PIND & MINUTE_SWITCH){
 	while(PINB & MINUTE_SWITCH){
 		DynamicDrive(d_num);
 		
@@ -51,7 +50,6 @@ void SetMinutes(uint8_t d_num[]){
 			
 			TCNT1 = 0;
 			
-			//while(PIND & MINUTE_SWITCH && !(PIND & SECONDS_SWITCH)){
 			while(PINB & MINUTE_SWITCH && !(PINB & SECONDS_SWITCH)){
 				
 				pulse_count = TCNT1;
@@ -67,12 +65,10 @@ void SetMinutes(uint8_t d_num[]){
 			}
 		}
 		
-		//if(PIND & SECONDS_SWITCH){
 		if(PINB & SECONDS_SWITCH){
 			p = (uint32_t *)d_num;
 			*p = 0x00000000;
 			
-			//while(PIND & SECONDS_SWITCH || PIND & MINUTE_SWITCH){
 			while(PINB & SECONDS_SWITCH || PINB & MINUTE_SWITCH){
 				DynamicDrive(d_num);
 			}
@@ -90,16 +86,13 @@ void SetSeconds(uint8_t d_num[]){
 	
 	SecondsCounter(d_num);
 	
-	//while(PIND & SECONDS_SWITCH){
 	while(PINB & SECONDS_SWITCH){
 		DynamicDrive(d_num);
 		
-		//if(PIND & MINUTE_SWITCH){
 		if(PINB & MINUTE_SWITCH){
 			p = (uint32_t *)d_num;
 			*p = 0x00000000;
 			
-			//while(PIND & SECONDS_SWITCH || PIND & MINUTE_SWITCH){
 			while(PINB & SECONDS_SWITCH || PINB & MINUTE_SWITCH){
 				DynamicDrive(d_num);
 			}
