@@ -21,7 +21,7 @@ int main(void)
 	//7SegmentLED	   PORTB -> PORTD
 		
 	//DDRB = 0b11111111;
-	DDRB = 0b10000000;
+	DDRB = 0b00000001;
 	
 	DDRC = 0b00101111;
 	

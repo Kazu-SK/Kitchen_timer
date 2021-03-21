@@ -23,13 +23,15 @@ ISR(TIMER1_COMPB_vect){
 	else
 		PORTB = OFF;
 */	
-	if(PORTD == OFF)
+	if(PORTD == OFF){
 		PORTD = ALL_LIGHT;
-	else
+		PORTB |= 1 << DDB0;
+	}
+	else{
 		PORTD = OFF;
-	
-	//PORTD ^= 1 << DDD7;
-	PORTB ^= 1 << DDB7; 
+		PORTB ^= 1 << DDB0;
+	}
+	 
 	TCNT1 = 0; 
 }
 
@@ -141,7 +143,8 @@ void CountDown(uint8_t d_num[]){
 
 
 	//PORTB = 0x00;
-	PORTD = 0x00;
+	PORTD = ALL_LIGHT;
+	PORTB |= 1 << DDB0;
 
 	if(reset_signal == RESET_OFF){
 		
@@ -161,7 +164,10 @@ void CountDown(uint8_t d_num[]){
 			//if(PIND & START_SWITCH){
 			if(PINB & START_SWITCH){
 				cli();
-				PORTD = !(PORTD | 0xFF);
+				//PORTD = !(PORTD | 0xFF);
+				if(PORTB & 1 << DDB0)
+					PORTB ^= 1 << DDB0;
+				
 				break;
 			}
 	
