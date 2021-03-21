@@ -16,10 +16,17 @@ int main(void)
 	/* Replace with your application code */
 	uint8_t display_num[4] = {0,0,0,0};
 		
+	//7SegmentLED base PORTC -> PORTC
+	//switch		   PORTD -> PORTB
+	//7SegmentLED	   PORTB -> PORTD
 		
-	DDRB = 0b11111111;
+	//DDRB = 0b11111111;
+	DDRB = 0b10000000;
+	
 	DDRC = 0b00101111;
-	DDRD = 0b10000000;
+	
+	//DDRD = 0b10000000;
+	DDRD = 0b11111111;
 	
 
 	TCCR1A = 0b00000000;
@@ -34,17 +41,20 @@ int main(void)
 
 	for(;;)
 	{
-		if(PIND & (1 << PIND2)){
+		//if(PIND & (1 << PIND2)){
+		if(PINB & (1 << PINB2)){
 			TCCR1B = STANDARD_OPERATION;
 			SetMinutes(display_num);
 			TCCR1B = CTC_OPERATION;
 		}
 		
-		if(PIND & (1 << PIND3)){
+	//	if(PIND & (1 << PIND3)){
+		if(PINB & (1 << PINB3)){
 			SetSeconds(display_num);
 		}
 		
-		if(PIND & (1 << PIND4)){
+	//	if(PIND & (1 << PIND4)){
+		if(PINB & (1 << PIND4)){
 			CountDown(display_num);
 		}
 		
