@@ -103,7 +103,7 @@ void CountDown(uint8_t d_num[]){
 				p = (uint32_t *)d_num;
 				*p = 0x00000000;
 				
-				while (PINB & MINUTE_SWITCH){
+				while (PINB & MINUTE_SWITCH || PINB & SECONDS_SWITCH){
 					DynamicDrive(d_num);
 				}				
 				
