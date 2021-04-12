@@ -32,6 +32,7 @@
     - 「スタート」スイッチを押下すると、ディスプレイには【00.00】が表示され、時間の再設定が可能となる。
 
 * 状態遷移図
-![キッチンタイマー_状態遷移図](https://user-images.githubusercontent.com/61465092/114204138-ce944d80-9993-11eb-8560-fe63afc84c51.png)
+![キッチンタイマー_状態遷移図](https://user-images.githubusercontent.com/61465092/114204646-64c87380-9994-11eb-8be5-661fe35e0df2.png)
+
 
 
