@@ -1,6 +1,6 @@
 # Kitchen_timer
 
-家で使える物を自作してみる。
+家で使える物を自作してみた。
 
 ![kitchen_timer_gif](https://user-images.githubusercontent.com/61465092/114407941-e5c97a00-9be3-11eb-836f-a2ebd51548bf.gif)
 
